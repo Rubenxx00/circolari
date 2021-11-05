@@ -23,7 +23,7 @@ def get_news_in_page(url, until=None):
     for x in entries.find_all('tr')[1:]:
         tds = x.find_all('td')
         n = News(
-                int(tds[1].text),
+                tds[1].text,
                 tds[0].text,
                 tds[2].text,
                 tds[3].a['href'],

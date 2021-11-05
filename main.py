@@ -2,7 +2,6 @@ import schedule
 import time
 import secret
 import telegram
-from telegram.bot import log
 from data import Data
 from telegram import Bot
 from reader import get_latest_url, get_news_in_page
@@ -58,7 +57,7 @@ def get_updates(data: Data):
             data.latest_id = queue[-1].id
             if data.latest_id != max([x.id for x in queue]):
                 logger.warning("Post order is strange: %s",
-                            ', '.join(str(q.id) for q in queue))
+                               ', '.join(str(q.id) for q in queue))
         return queue
     except Exception as e:
         logger.error(e, exc_info=True)
@@ -78,7 +77,7 @@ def task(data: Data):
                 client.send_message(
                     CHAT_ID, text, parse_mode=telegram.ParseMode.HTML)
                 time.sleep(1)
-            except TimeoutError: # retry
+            except TimeoutError:  # retry
                 logger.debug('Retrying sending number %d', u.id)
                 client.send_message(
                     CHAT_ID, text, parse_mode=telegram.ParseMode.HTML)
@@ -88,7 +87,7 @@ def task(data: Data):
 
 task(data)
 
-schedule.every(1).hour.do(task)
+schedule.every(15).minutes.do(task)
 
 while True:
     schedule.run_pending()

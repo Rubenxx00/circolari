@@ -4,7 +4,7 @@ class Data:
     db = 'app.db'
 
     def __init__(self):
-        self._latest_id = -1
+        self._latest_id = ''
         self._latest_url = ''
 
     @staticmethod
